@@ -1,20 +1,18 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">{{ message }}</div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  name: "Dashboard",
+  data() {
+    return {
+      message: "我是dashboard页面"
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

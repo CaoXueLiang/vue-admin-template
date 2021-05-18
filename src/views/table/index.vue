@@ -28,12 +28,24 @@
           {{ scope.row.pageviews }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
+      <el-table-column
+        class-name="status-col"
+        label="Status"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">{{
+            scope.row.status
+          }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
+      <el-table-column
+        align="center"
+        prop="created_at"
+        label="Display_time"
+        width="200"
+      >
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.display_time }}</span>
@@ -44,36 +56,54 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from "@/api/table";
+import { getOrginationRequest, getMointorInfo } from "@/api/anotherTable";
 
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+        published: "success",
+        draft: "gray",
+        deleted: "danger"
+      };
+      return statusMap[status];
     }
   },
   data() {
     return {
       list: null,
       listLoading: true
-    }
+    };
   },
   created() {
-    this.fetchData()
+    this.fetchData();
+    this.getRequest();
   },
   methods: {
     fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      // this.listLoading = true;
+      // getList().then(response => {
+      //   this.list = response.data.items;
+      //   this.listLoading = false;
+      // });
+      const paragram = {
+        projectId: 1
+      };
+      getOrginationRequest(paragram)
+        .then(result => {
+          console.log("===============" + JSON.stringify(result));
+        })
+        .catch(err => {});
+    },
+
+    getRequest() {
+      getMointorInfo()
+        .then(result => {
+          console.log("=========摄像头结果======" + JSON.stringify(result));
+        })
+        .catch(err => {});
     }
   }
-}
+};
 </script>
