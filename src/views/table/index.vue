@@ -78,23 +78,23 @@ export default {
   },
   created() {
     this.fetchData();
-    this.getRequest();
+    // this.getRequest();
   },
   methods: {
     fetchData() {
-      // this.listLoading = true;
-      // getList().then(response => {
-      //   this.list = response.data.items;
-      //   this.listLoading = false;
-      // });
-      const paragram = {
-        projectId: 1
-      };
-      getOrginationRequest(paragram)
-        .then(result => {
-          console.log("===============" + JSON.stringify(result));
-        })
-        .catch(err => {});
+      this.listLoading = true;
+      getList().then(response => {
+        this.list = response.data.items;
+        this.listLoading = false;
+      });
+      // const paragram = {
+      //   projectId: 1
+      // };
+      // getOrginationRequest(paragram)
+      //   .then(result => {
+      //     console.log("===============" + JSON.stringify(result));
+      //   })
+      //   .catch(err => {});
     },
 
     getRequest() {
