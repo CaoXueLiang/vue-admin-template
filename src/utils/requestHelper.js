@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
-import axios from "axios";
-import BASEURL from "../config/configBaseURL";
-import qs from "qs";
+import axios from 'axios';
+import BASEURL from '../config/configBaseURL';
+import qs from 'qs';
 
 const axiosInstance = axios.create({
   baseURL: BASEURL,
-  timeout: 100000
+  timeout: 20000
 });
 
 //请求拦截
@@ -28,38 +28,39 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-const requestInstance = {
-  requestWithForm(config) {
-    let paragram = {
-      url: config.url,
-      data: qs.stringify(config.data),
-      method: "post",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-      }
-    };
-    return axiosInstance(paragram);
-  },
+export function requestWithForm(url, datas) {
+  let paragram = qs.stringify(datas);
+  return axiosInstance.post(url, paragram, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+}
 
-  requestWithJson(config) {
-    let paragram = Object.assign(config, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    return axiosInstance(paragram);
-  },
+export function getWithJson(url, datas) {
+  return axiosInstance({
+    method: 'get',
+    url,
+    params: datas,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  });
+}
 
-  requestWithData(config) {
-    let paragram = Object.assign(config, {
-      method: "post",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
-    return axiosInstance(paragram);
-  }
-};
+export function postWithJson(url, datas) {
+  let paragram = JSON.stringify(datas);
+  return axiosInstance.post(url, paragram, {
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  });
+}
 
-export default requestInstance;
+export function requestFileForm(url, datas) {
+  return axiosInstance.post(url, datas, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
