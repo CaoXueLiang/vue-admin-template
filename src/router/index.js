@@ -18,6 +18,8 @@ const menuOneTwoOne = () => import('@/views/nested/menu1/menu1-2/menu1-2-1');
 const menuOneTwoTwo = () => import('@/views/nested/menu1/menu1-2/menu1-2-2');
 const menuOneTree = () => import('@/views/nested/menu1/menu1-3');
 const menuTwo = () => import('@/views/nested/menu2/index');
+const Icon = () => import('@/views/compoments/icon');
+const Titlelink = () => import('@/views/compoments/titleLink');
 
 export const constantRoutes = [
   {
@@ -69,7 +71,29 @@ export const constantRoutes = [
         path: 'buttons',
         name: 'Buttons',
         component: buttonPage,
-        meta: { title: '按钮', icon: 'tree' }
+        meta: { title: '按钮', icon: 'buttonicon' }
+      }
+    ]
+  },
+
+  {
+    path: '/compoment',
+    component: Layout,
+    redirect: '/compoment/icon',
+    name: 'compoment',
+    meta: { title: '组件', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'icon',
+        name: 'Icon',
+        component: Icon,
+        meta: { title: '图标', icon: 'tubiao' }
+      },
+      {
+        path: 'titleLink',
+        name: 'Titlelink',
+        component: Titlelink,
+        meta: { title: '文字链接', icon: 'titlelinkiocn' }
       }
     ]
   },
