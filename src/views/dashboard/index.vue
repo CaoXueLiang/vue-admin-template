@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard-container">
+    <el-button type="primary" @click="gotoDetail">跳转详情页面</el-button>
     <div class="dashboard-text">{{ message }}</div>
     <div class="normalTitle">1、getWithJson请求</div>
     <div>{{ requestData }}</div>
@@ -45,6 +46,9 @@ export default {
     this.getTotalMonitor();
   },
   methods: {
+    gotoDetail() {
+      this.$router.push('/dashboardDetail');
+    },
     async getTotalfile() {
       let paragram = {
         projectId: 1,

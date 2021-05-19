@@ -56,16 +56,15 @@
 </template>
 
 <script>
-import { getList } from "@/api/table";
-import { getOrginationRequest, getMointorInfo } from "@/api/anotherTable";
+import { getList } from '@/api/table';
 
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger"
+        published: 'success',
+        draft: 'gray',
+        deleted: 'danger'
       };
       return statusMap[status];
     }
@@ -95,14 +94,6 @@ export default {
       //     console.log("===============" + JSON.stringify(result));
       //   })
       //   .catch(err => {});
-    },
-
-    getRequest() {
-      getMointorInfo()
-        .then(result => {
-          console.log("=========摄像头结果======" + JSON.stringify(result));
-        })
-        .catch(err => {});
     }
   }
 };

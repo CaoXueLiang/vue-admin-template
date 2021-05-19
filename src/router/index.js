@@ -7,6 +7,7 @@ import Layout from '@/layout';
 const Login = () => import('@/views/login/index');
 const errorPage = () => import('@/views/404');
 const Dashboard = () => import('@/views/dashboard/index');
+const DashboardDetail = () => import('@/views/dashboard/dashboardDetail');
 const Table = () => import('@/views/table/index');
 const Tree = () => import('@/views/tree/index');
 const buttonPage = () => import('@/views/buttons/buttons');
@@ -44,6 +45,13 @@ export const constantRoutes = [
         name: 'Dashboard',
         component: Dashboard,
         meta: { title: '首页', icon: 'dashboard' }
+      },
+      {
+        hidden: true,
+        path: 'dashboardDetail',
+        name: 'DashboardDetail',
+        component: DashboardDetail,
+        meta: { title: '详情页', icon: 'dashboard' }
       }
     ]
   },
