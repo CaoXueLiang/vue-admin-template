@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import BASEURL from '../config/configBaseURL';
 import qs from 'qs';

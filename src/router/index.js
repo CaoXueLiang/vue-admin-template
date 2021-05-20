@@ -51,11 +51,13 @@ export const constantRoutes = [
         path: 'dashboardDetail',
         name: 'DashboardDetail',
         component: DashboardDetail,
-        meta: { title: '详情页', icon: 'dashboard' }
+        meta: { title: '详情页', icon: 'dashboard', activeMenu: '/dashboard' }
       }
     ]
-  },
+  }
+];
 
+export const asyncRoutes = [
   {
     path: '/example',
     component: Layout,

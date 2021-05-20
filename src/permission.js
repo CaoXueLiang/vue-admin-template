@@ -26,6 +26,7 @@ router.beforeEach(async (to, from, next) => {
       if (hasGetUserInfo) {
         next();
       } else {
+        console.log('--------路由拦截------');
         try {
           // get user info
           await store.dispatch('user/getInfo');
