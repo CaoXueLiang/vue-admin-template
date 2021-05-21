@@ -31,9 +31,9 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo');
-          getPermissionMenus();
-          router.options.routes = [...constantRoutes, ...asyncRoutes];
-          router.addRoutes(asyncRoutes);
+          let permissionArray = getPermissionMenus();
+          router.options.routes = [...constantRoutes, ...permissionArray];
+          router.addRoutes(permissionArray);
           next({ ...to, replace: true });
         } catch (error) {
           // remove token and go to login page to re-login
@@ -64,47 +64,42 @@ router.afterEach(() => {
 });
 
 function getPermissionMenus() {
-  let totalArray = [];
   let cloneMenuArray = _.cloneDeep(asyncRoutes);
   console.log(cloneMenuArray);
-  // for (let index = 0; index < cloneMenuArray.length; index++) {
-  //   let firstElement = cloneMenuArray[index];
-  //   if (filterByMenuId(firstElement)) {
-  //     let firstChildren = firstElement.children;
-  //     let tmpFirstChildren = [];
-  //     if (firstChildren) {
-  //       for (let secondindex = 0; secondindex < firstChildren.length; secondindex++) {
-  //         let secondElement = firstChildren[secondindex];
-  //         if (filterByMenuId(secondElement)) {
-  //           let secondChildren = secondElement.children;
-  //           let tmpSecondChildren = [];
-  //           if (secondChildren) {
-  //             for (let thirdIndx = 0; thirdIndx < secondChildren.length; thirdIndx++) {
-  //               let thirdElement = secondChildren[thirdIndx];
-  //               if (filterByMenuId(thirdElement)) {
-  //                 let thirdChildren = thirdElement.children;
-  //                 for (let fourthindex = 0; fourthindex < thirdChildren.length; fourthindex++) {
-  //                   let fourthElement = thirdChildren[fourthindex];
-  //                   if (filterByMenuId(fourthElement)) {
-  //                   }
-  //                 }
-  //                 tmpSecondChildren.push(thirdElement);
-  //               }
-  //             }
-  //           }
-  //           secondElement.children = tmpSecondChildren;
-  //           tmpFirstChildren.push(secondElement);
-  //         }
-  //       }
-  //     }
-  //     firstElement.children = tmpFirstChildren;
-  //     totalArray.push(firstElement);
-  //   }
-  // }
-  return totalArray;
+  let filterArray = filterByMenuId(cloneMenuArray);
+  filterArray.forEach(firstElement => {
+    if (firstElement.children) {
+      let firstChildren = filterByMenuId(firstElement.children);
+      firstElement.children = firstChildren;
+
+      firstChildren.forEach(secondElement => {
+        if (secondElement.children) {
+          let secondChildren = filterByMenuId(secondElement.children);
+          secondElement.children = secondChildren;
+
+          secondChildren.forEach(thirdElement => {
+            if (thirdElement.children) {
+              let thirdChildren = filterByMenuId(thirdElement.children);
+              thirdElement.children = thirdChildren;
+
+              thirdChildren.forEach(fourthElement => {
+                if (fourthElement.children) {
+                  let fourthChildren = filterByMenuId(fourthElement.children);
+                  fourthElement.children = fourthChildren;
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+
+  console.log(filterArray);
+  return filterArray;
 }
 
-function filterByMenuId(element) {
+function filterByMenuId(menusArray) {
   let menuIdArray = store.state.user.permissionMenu;
-  return menuIdArray.includes(element.meta.menuId);
+  return menusArray.filter(item => menuIdArray.includes(item.meta.menuId));
 }
