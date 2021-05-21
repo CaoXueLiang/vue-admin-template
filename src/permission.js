@@ -4,6 +4,8 @@ import { Message } from 'element-ui';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getToken } from '@/utils/auth'; // get token from cookie
+import { constantRoutes, asyncRoutes } from '@/router';
+import _, { first } from 'lodash';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
@@ -26,12 +28,13 @@ router.beforeEach(async (to, from, next) => {
       if (hasGetUserInfo) {
         next();
       } else {
-        console.log('--------路由拦截------');
         try {
           // get user info
           await store.dispatch('user/getInfo');
-
-          next();
+          getPermissionMenus();
+          router.options.routes = [...constantRoutes, ...asyncRoutes];
+          router.addRoutes(asyncRoutes);
+          next({ ...to, replace: true });
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken');
@@ -59,3 +62,49 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done();
 });
+
+function getPermissionMenus() {
+  let totalArray = [];
+  let cloneMenuArray = _.cloneDeep(asyncRoutes);
+  console.log(cloneMenuArray);
+  // for (let index = 0; index < cloneMenuArray.length; index++) {
+  //   let firstElement = cloneMenuArray[index];
+  //   if (filterByMenuId(firstElement)) {
+  //     let firstChildren = firstElement.children;
+  //     let tmpFirstChildren = [];
+  //     if (firstChildren) {
+  //       for (let secondindex = 0; secondindex < firstChildren.length; secondindex++) {
+  //         let secondElement = firstChildren[secondindex];
+  //         if (filterByMenuId(secondElement)) {
+  //           let secondChildren = secondElement.children;
+  //           let tmpSecondChildren = [];
+  //           if (secondChildren) {
+  //             for (let thirdIndx = 0; thirdIndx < secondChildren.length; thirdIndx++) {
+  //               let thirdElement = secondChildren[thirdIndx];
+  //               if (filterByMenuId(thirdElement)) {
+  //                 let thirdChildren = thirdElement.children;
+  //                 for (let fourthindex = 0; fourthindex < thirdChildren.length; fourthindex++) {
+  //                   let fourthElement = thirdChildren[fourthindex];
+  //                   if (filterByMenuId(fourthElement)) {
+  //                   }
+  //                 }
+  //                 tmpSecondChildren.push(thirdElement);
+  //               }
+  //             }
+  //           }
+  //           secondElement.children = tmpSecondChildren;
+  //           tmpFirstChildren.push(secondElement);
+  //         }
+  //       }
+  //     }
+  //     firstElement.children = tmpFirstChildren;
+  //     totalArray.push(firstElement);
+  //   }
+  // }
+  return totalArray;
+}
+
+function filterByMenuId(element) {
+  let menuIdArray = store.state.user.permissionMenu;
+  return menuIdArray.includes(element.meta.menuId);
+}
