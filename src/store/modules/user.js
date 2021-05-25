@@ -64,7 +64,7 @@ const actions = {
 
           commit('SET_NAME', name);
           commit('SET_AVATAR', avatar);
-          commit('SET_MENUS', [10, 11, 12, 30, 31, 40, 41, 42, 43, 44, 45, 47, 60]);
+          commit('SET_MENUS', [10, 11, 12, 20, 21, 22, 30, 31, 40, 41, 42, 43, 44, 45, 47, 60]);
           resolve(data);
         })
         .catch(error => {
