@@ -43,9 +43,7 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon
-            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
-          />
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
@@ -67,6 +65,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate';
+import { loginManage } from 'api/login.js';
 
 export default {
   name: 'Login',
@@ -91,12 +90,8 @@ export default {
         password: '111111'
       },
       loginRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
-        ],
-        password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
-        ]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -122,19 +117,22 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
+    async handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
+          let res = loginManage({ username: '1060422', password: '12qwaszx', type: 'pc_front' });
+          if (res) {
+            this.$store
+              .dispatch('user/login', this.loginForm)
+              .then(() => {
+                this.$router.push({ path: this.redirect || '/' });
+                this.loading = false;
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          }
         } else {
           console.log('error submit!!');
           return false;
