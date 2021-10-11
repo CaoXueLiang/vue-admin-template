@@ -117,7 +117,7 @@ export const asyncRoutes = [
         path: 'index',
         name: 'Form',
         component: Form,
-        meta: { title: '表单', icon: 'form', menuId: 31 }
+        meta: { title: '表单-1', icon: 'form', menuId: 31 }
       }
     ]
   },

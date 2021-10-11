@@ -65,39 +65,54 @@ router.afterEach(() => {
 
 function getPermissionMenus() {
   let cloneMenuArray = _.cloneDeep(asyncRoutes);
-  console.log(cloneMenuArray);
+
+  console.log('cloneMenuArray', cloneMenuArray);
+
   let filterArray = filterByMenuId(cloneMenuArray);
-  filterArray.forEach(firstElement => {
-    if (firstElement.children) {
-      let firstChildren = filterByMenuId(firstElement.children);
-      firstElement.children = firstChildren;
-
-      firstChildren.forEach(secondElement => {
-        if (secondElement.children) {
-          let secondChildren = filterByMenuId(secondElement.children);
-          secondElement.children = secondChildren;
-
-          secondChildren.forEach(thirdElement => {
-            if (thirdElement.children) {
-              let thirdChildren = filterByMenuId(thirdElement.children);
-              thirdElement.children = thirdChildren;
-
-              thirdChildren.forEach(fourthElement => {
-                if (fourthElement.children) {
-                  let fourthChildren = filterByMenuId(fourthElement.children);
-                  fourthElement.children = fourthChildren;
-                }
-              });
-            }
-          });
-        }
-      });
-    }
+  filterArray.forEach(resItem => {
+    filterArrayMethod(resItem);
   });
+
+  // filterArray.forEach(firstElement => {
+  //   if (firstElement.children) {
+  //     let firstChildren = filterByMenuId(firstElement.children);
+  //     firstElement.children = firstChildren;
+
+  //     firstChildren.forEach(secondElement => {
+  //       if (secondElement.children) {
+  //         let secondChildren = filterByMenuId(secondElement.children);
+  //         secondElement.children = secondChildren;
+
+  //         secondChildren.forEach(thirdElement => {
+  //           if (thirdElement.children) {
+  //             let thirdChildren = filterByMenuId(thirdElement.children);
+  //             thirdElement.children = thirdChildren;
+
+  //             thirdChildren.forEach(fourthElement => {
+  //               if (fourthElement.children) {
+  //                 let fourthChildren = filterByMenuId(fourthElement.children);
+  //                 fourthElement.children = fourthChildren;
+  //               }
+  //             });
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
   return filterArray;
 }
 
 function filterByMenuId(menusArray) {
   let menuIdArray = store.state.user.permissionMenu;
   return menusArray.filter(item => menuIdArray.includes(item.meta.menuId));
+}
+
+function filterArrayMethod(item) {
+  if (item.children && Array.isArray(item.children)) {
+    item.children = filterByMenuId(item.children);
+    item.children.forEach(elementItem => {
+      filterArrayMethod(elementItem);
+    });
+  }
 }
