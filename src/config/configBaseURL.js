@@ -1,6 +1,6 @@
 /**
  * 全局地址配置
  */
-const BASE_URL = 'http://182.92.67.139/mobilegw';
+const BASE_URL = 'https://pmnt-uat.gongjiangcloud.cn/mobilegw';
 
 export default BASE_URL;

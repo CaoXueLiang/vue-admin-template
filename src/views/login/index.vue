@@ -117,22 +117,45 @@ export default {
         this.$refs.password.focus();
       });
     },
-    async handleLogin() {
+    // async handleLogin() {
+    //   this.$refs.loginForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true;
+    //       // let res = loginManage({ username: '1048945', password: '123456', type: 'pc_front' });
+    //       let res = '1060423';
+    //       if (res) {
+    //         this.$store
+    //           .dispatch('user/login', this.loginForm)
+    //           .then(() => {
+    //             console.log('==========login====');
+    //             this.$router.push({ path: this.redirect || '/' });
+    //             this.loading = false;
+    //           })
+    //           .catch(() => {
+    //             console.log('==========false====');
+    //             this.loading = false;
+    //           });
+    //       }
+    //     } else {
+    //       console.log('error submit!!');
+    //       return false;
+    //     }
+    //   });
+    // },
+
+    handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          let res = loginManage({ username: '1060422', password: '12qwaszx', type: 'pc_front' });
-          if (res) {
-            this.$store
-              .dispatch('user/login', this.loginForm)
-              .then(() => {
-                this.$router.push({ path: this.redirect || '/' });
-                this.loading = false;
-              })
-              .catch(() => {
-                this.loading = false;
-              });
-          }
+          this.$store
+            .dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/' });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
           console.log('error submit!!');
           return false;
