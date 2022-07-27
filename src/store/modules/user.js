@@ -7,14 +7,14 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    permissionMenu: []
+    permissionMenu: [],
   };
 };
 
 const state = getDefaultState();
 
 const mutations = {
-  RESET_STATE: state => {
+  RESET_STATE: (state) => {
     Object.assign(state, getDefaultState());
   },
   SET_TOKEN: (state, token) => {
@@ -28,7 +28,7 @@ const mutations = {
   },
   SET_MENUS: (state, menus) => {
     state.permissionMenu = menus;
-  }
+  },
 };
 
 const actions = {
@@ -37,13 +37,13 @@ const actions = {
     const { username, password } = userInfo;
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password })
-        .then(response => {
+        .then((response) => {
           const { data } = response;
           commit('SET_TOKEN', data.token);
           setToken(data.token);
-          resolve();
+          resolve(response);
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -53,7 +53,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
-        .then(response => {
+        .then((response) => {
           const { data } = response;
 
           if (!data) {
@@ -67,7 +67,7 @@ const actions = {
           commit('SET_MENUS', [10, 12, 20, 21, 22, 30, 31, 40, 41, 43, 45, 46, 47, 50, 51, 60]);
           resolve(data);
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -83,7 +83,7 @@ const actions = {
           commit('RESET_STATE');
           resolve();
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -91,17 +91,17 @@ const actions = {
 
   // remove token
   resetToken({ commit }) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       removeToken(); // must remove  token  first
       commit('RESET_STATE');
       resolve();
     });
-  }
+  },
 };
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 };
