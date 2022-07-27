@@ -26,13 +26,13 @@ export const constantRoutes = [
   {
     path: '/login',
     component: Login,
-    hidden: true
+    hidden: true,
   },
 
   {
     path: '/404',
     component: errorPage,
-    hidden: true
+    hidden: true,
   },
 
   {
@@ -44,17 +44,17 @@ export const constantRoutes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: Dashboard,
-        meta: { title: '首页', icon: 'dashboard' }
+        meta: { title: '首页', icon: 'dashboard' },
       },
       {
         hidden: true,
         path: 'dashboardDetail',
         name: 'DashboardDetail',
         component: DashboardDetail,
-        meta: { title: '详情页', icon: 'dashboard', activeMenu: '/dashboard' }
-      }
-    ]
-  }
+        meta: { title: '详情页', icon: 'dashboard', activeMenu: '/dashboard' },
+      },
+    ],
+  },
 ];
 
 export const asyncRoutes = [
@@ -69,21 +69,21 @@ export const asyncRoutes = [
         path: 'table',
         name: 'Table',
         component: Table,
-        meta: { title: '表格', icon: 'table', menuId: 11 }
+        meta: { title: '表格', icon: 'table', menuId: 11 },
       },
       {
         path: 'tree',
         name: 'Tree',
         component: Tree,
-        meta: { title: '树', icon: 'tree', menuId: 12 }
+        meta: { title: '树', icon: 'tree', menuId: 12 },
       },
       {
         path: 'buttons',
         name: 'Buttons',
         component: buttonPage,
-        meta: { title: '按钮', icon: 'buttonicon', menuId: 13 }
-      }
-    ]
+        meta: { title: '按钮', icon: 'buttonicon', menuId: 13 },
+      },
+    ],
   },
 
   {
@@ -97,29 +97,30 @@ export const asyncRoutes = [
         path: 'icon',
         name: 'Icon',
         component: Icon,
-        meta: { title: '图标', icon: 'tubiao', menuId: 21 }
+        meta: { title: '图标', icon: 'tubiao', menuId: 21 },
       },
       {
         path: 'titleLink',
         name: 'Titlelink',
         component: Titlelink,
-        meta: { title: '文字链接', icon: 'titlelinkiocn', menuId: 22 }
-      }
-    ]
+        meta: { title: '文字链接', icon: 'titlelinkiocn', menuId: 22 },
+      },
+    ],
   },
 
   {
     path: '/form',
     component: Layout,
+    redirect: '/form/index',
     meta: { title: '表单', icon: 'form', menuId: 30 },
     children: [
       {
         path: 'index',
         name: 'Form',
         component: Form,
-        meta: { title: '表单-1', icon: 'form', menuId: 31 }
-      }
-    ]
+        meta: { title: '表单-1', icon: 'form', menuId: 31 },
+      },
+    ],
   },
 
   {
@@ -130,7 +131,7 @@ export const asyncRoutes = [
     meta: {
       title: '路由嵌套',
       icon: 'nested',
-      menuId: 40
+      menuId: 40,
     },
     children: [
       {
@@ -143,7 +144,7 @@ export const asyncRoutes = [
             path: 'menu1-1',
             component: menuOneOne,
             name: 'Menu1-1',
-            meta: { title: '菜单1-1', menuId: 42 }
+            meta: { title: '菜单1-1', menuId: 42 },
           },
           {
             path: 'menu1-2',
@@ -155,31 +156,31 @@ export const asyncRoutes = [
                 path: 'menu1-2-1',
                 component: menuOneTwoOne,
                 name: 'Menu1-2-1',
-                meta: { title: '菜单1-2-1', menuId: 44 }
+                meta: { title: '菜单1-2-1', menuId: 44 },
               },
               {
                 path: 'menu1-2-2',
                 component: menuOneTwoTwo,
                 name: 'Menu1-2-2',
-                meta: { title: '菜单1-2-2', menuId: 45 }
-              }
-            ]
+                meta: { title: '菜单1-2-2', menuId: 45 },
+              },
+            ],
           },
           {
             path: 'menu1-3',
             component: menuOneTree,
             name: 'Menu1-3',
-            meta: { title: '菜单1-3', menuId: 46 }
-          }
-        ]
+            meta: { title: '菜单1-3', menuId: 46 },
+          },
+        ],
       },
       {
         path: 'menu2',
         component: menuTwo,
         name: 'Menu2',
-        meta: { title: '菜单2', menuId: 47 }
-      }
-    ]
+        meta: { title: '菜单2', menuId: 47 },
+      },
+    ],
   },
 
   {
@@ -190,9 +191,9 @@ export const asyncRoutes = [
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: '外部链接', icon: 'link', menuId: 51 }
-      }
-    ]
+        meta: { title: '外部链接', icon: 'link', menuId: 51 },
+      },
+    ],
   },
 
   // 404 page must be placed at the end !!!
@@ -200,15 +201,15 @@ export const asyncRoutes = [
     path: '*',
     redirect: '/404',
     hidden: true,
-    meta: { title: '外部链接', icon: 'link', menuId: 60 }
-  }
+    meta: { title: '外部链接', icon: 'link', menuId: 60 },
+  },
 ];
 
 const createRouter = () =>
   new Router({
     mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
+    routes: constantRoutes,
   });
 
 const router = createRouter();
